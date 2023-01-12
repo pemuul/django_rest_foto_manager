@@ -1,0 +1,9 @@
+<div style="border: 10px; border-color: black;">
+    <p>ID: {{ foto.id }}</p>
+    <p>ГЕО: {{ foto.geo }}</p>
+    <p>Описание: {{ foto.description }}</p>
+    <p>Люди: {{ foto.peoples }}</p>
+    <div style="max-height:100%; max-width:100%;">
+        <img src="{{foto.foto_im.url}}" style="max-height:400px; max-width:400px;">
+    </div>
+</div>

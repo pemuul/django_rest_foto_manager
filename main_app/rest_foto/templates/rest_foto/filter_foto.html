@@ -1,0 +1,42 @@
+{% block content %}
+
+{% if form.errors %}
+  <p>Ошибка на форме</p>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'rest_foto:filter_foto' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="geo">Гео данные (0,0): </label>
+    <input id="geo" type="text" name="geo" maxlength="100" value="{{geo}}"><br>
+
+    <label for="description">Описание: </label>
+    <input id="description" type="text" name="description" maxlength="100" value="{{description}}"><br>
+
+    <label for="people_name">Имя человека: </label>
+    <input id="people_name" type="text" name="people_name" maxlength="100" value="{{people_name}}"><br>
+
+    <button type="submit">Найти</button>
+</form>
+
+{% for foto in fotos %}
+    <div style="border: 10px; border-color: black;">
+        <!--<p>{{ foto.id }}</p>
+        <p>{{ foto.geo }}</p>
+        <p>{{ foto.description }}</p>
+        <p>{{ foto.peoples }}</p> -->
+        <div style="max-height:100%; max-width:100%;">
+            <img src="{{foto.foto_im.url}}" style="max-height:400px; max-width:400px;">
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

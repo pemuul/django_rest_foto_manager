@@ -1,0 +1,33 @@
+{% block content %}
+
+{% if form.errors %}
+  <p>Ошибка на форме</p>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'rest_foto:new_image' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="geo">Гео данные: </label>
+    <input id="geo" type="text" name="geo" maxlength="100" required><br>
+
+    <label for="description">Описание: </label>
+    <input id="description" type="text" name="description" maxlength="100" required><br>
+
+    <label for="peoples">Имена (через пробел): </label>
+    <input id="peoples" type="text" name="peoples" maxlength="100" required><br>
+
+    <input type="file" name="file" id="file" formnovalidate>
+    <label class="button" for="file">Выбрать файл</label><br><br>
+
+    <button type="submit">Загрузка</button>
+</form>
+
+{% endblock %}
