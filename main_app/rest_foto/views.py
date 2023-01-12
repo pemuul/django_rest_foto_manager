@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.template import loader
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 
 from .forms import UploadFileForm
@@ -64,7 +64,10 @@ def filter_foto(request):
     return HttpResponse(template.render(context, request))
 
 def foto(request, foto_id):
-    foto = Foto.objects.get(id=foto_id)
+    try:
+        foto = Foto.objects.get(id=foto_id)
+    except:
+        raise Http404("Данного ID не существует")
 
     context = {
         'foto': foto,
